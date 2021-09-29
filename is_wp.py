@@ -6,9 +6,10 @@ def is_wordpress_meta(link):
     soup = BeautifulSoup(page.content, "html.parser")
     for meta in soup.findAll("meta"): 
         metaname = meta.get('name', '').lower() 
-        print ('>>>',metaname) 
+        #print ('>>>',metaname) 
         if metaname == 'generator': 
             if "WordPress" in meta.get('content'): 
+                print (f'{link} seems wp!! ')
                 print (meta.get('content')) 
                 return True 
             else:

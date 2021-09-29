@@ -18,11 +18,20 @@ def get_all_links(soup):
     links=soup.find_all("a",href=True)
     all_links=[]
     for link in links:
-        print (link)
+        #print (link)
         add=link["href"]
+        if 'http' not in add:
+            print ('not an http!')
+            continue
+        if type(add) == type(None): 
+            print (f'EROR===== {add}')
+            continue
+        
         if not any(blacked in add for blacked in blacklist):
+            print(f'link added {add}')
             all_links.append(add)
             blacklist.append(urlsplit(add).hostname) #1 solo hostname
+
     return all_links
     
 
@@ -40,11 +49,15 @@ wordpresses=[]
 every_link = get_all_links(soup)
 for link in every_link:
     if is_wordpress(link):
-        print(urlsplit(link).hostname)
+        # print(urlsplit(link).hostname)
         wordpresses.append(link)
+        #save_wp(wordpresses)
 
 save_wp(wordpresses)
 #save blacklist
 # with open('blacklist.csv', mode='w') as file_:
 #     writer = csv.writer(file_)
 #     writer.writerow(blacklist)
+
+
+#check ssl verification errors
